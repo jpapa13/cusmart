@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single"
+            android:title="Centros universitarios">
+        <item
+            android:id="@+id/nav_cu"
+            android:icon="@drawable/ic_university"
+            android:title="UDG" />
+        <item
+            android:id="@+id/nav_cucei"
+            android:icon="@drawable/ic_cucei"
+            android:title="CUCEI" />
+
+        <item
+            android:id="@+id/nav_cucea"
+            android:icon="@drawable/ic_cucea"
+            android:title="CUCEA" />
+        <item
+            android:id="@+id/nav_cuaad"
+            android:icon="@drawable/ic_cuaad"
+            android:title="CUAAD" />
+        <item
+            android:id="@+id/nav_cucsh"
+            android:icon="@drawable/ic_cucsh"
+            android:title="CUCSH" />
+        <item
+            android:id="@+id/nav_cucba"
+            android:icon="@drawable/ic_cucba"
+            android:title="CUCBA" />
+        <item
+            android:id="@+id/nav_cucs"
+            android:icon="@drawable/ic_cucs"
+            android:title="CUCS" />
+        <item
+            android:id="@+id/nav_cut"
+            android:icon="@drawable/ic_cut"
+            android:title="CUT" />
+    </group>
+
+    <item android:title="Facebook">
+        <menu>
+            <item
+                android:id="@+id/nav_gallery"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Gallery" />
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />
+        </menu>
+    </item>
+
+</menu>
