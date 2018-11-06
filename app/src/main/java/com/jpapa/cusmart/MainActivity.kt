@@ -1,5 +1,6 @@
 package com.jpapa.cusmart
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
@@ -59,7 +60,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_cucei -> {
-                // Handle the camera action
+                val intent = Intent(this, CUActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_gallery -> {
 

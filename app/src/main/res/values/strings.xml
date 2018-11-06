@@ -7,4 +7,12 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="intro">CUSMART es una página que te ayuda a buscar a tus profesores de una manera sencilla, amigable, rápida y con toda la información al alcance de tu mano</string>
+    <string name="qci_info">UNIVERSIDAD DE GUADALAJARA
+CENTRO UNIVERSITARIO DE CIENCIAS EXACTAS E INGENIERÍAS
+Blvd. Marcelino García Barragán #1421, esq Calzada Olímpica, C.P. 44430, Guadalajara, Jalisco, México.
+Teléfono: +52 (33) 1378 5900.</string>
+    <string name="hassem_detail">MACIAS BRAMBILA HASSEM RUBEN
+DEPARTAMENTO CIENCIAS COMPUTACIONALES
+        código: 2949676
+</string>
 </resources>
