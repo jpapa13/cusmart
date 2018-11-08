@@ -15,4 +15,8 @@ Teléfono: +52 (33) 1378 5900.</string>
 DEPARTAMENTO CIENCIAS COMPUTACIONALES
         código: 2949676
 </string>
+
+    <string name="facebook_app_id">284549925505699</string>
+    <string name="fb_login_protocol_scheme">fb284549925505699</string>
+
 </resources>

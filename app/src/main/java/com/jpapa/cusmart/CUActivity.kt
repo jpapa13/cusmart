@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.ListView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import kotlinx.android.synthetic.main.activity_cu.*
@@ -16,6 +17,8 @@ class CUActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cu)
+
+
 
         //Adapters
         val adapter = ArrayAdapter(this, R.layout.listview_item, arrayProfesores)

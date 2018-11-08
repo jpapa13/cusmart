@@ -1,5 +1,6 @@
 package com.jpapa.cusmart
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -7,22 +8,78 @@ import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
+import com.facebook.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import com.facebook.login.LoginResult
+import com.facebook.login.widget.LoginButton
+import android.content.Context.LAYOUT_INFLATER_SERVICE
+import android.view.LayoutInflater
+import com.jpapa.cusmart.R.layout.nav_header_main
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    private var callbackManager:CallbackManager? = null
+    private var profileTracker:ProfileTracker? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Inicia sesión con Facebook", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
+        callbackManager = CallbackManager.Factory.create()
+
+
+        val loginButton = findViewById<LoginButton>(R.id.login_button)
+        loginButton.setReadPermissions("email")
+        // If using in a fragment
+        //loginButton.setFragment(this)
+
+
+        //MODIFICAR ESTA LINEA, PARA CAMBIARLA AL HEADER DE LA BARRA
+        val vi = inflater.inflate(R.layout.nav_header_main, null) //log.xml is your file.
+        val tvusuario = vi.findViewById(R.id.tvusuario) as TextView //get a reference to the textview on the log.xml file.
+       // val tvNombre = findViewById<TextView>(R.id.tvNombre)
+
+        // Callback registration
+        loginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+            override fun onSuccess(loginResult: LoginResult) {
+                // App code
+                val accessToken = AccessToken.getCurrentAccessToken()
+                val isLoggedIn = accessToken != null && !accessToken.isExpired
+
+                tvNombre.setText(Profile.getCurrentProfile().name)
+                //Log.d("ACCESS-TOKEN",accessToken.token)
+
+                if(Profile.getCurrentProfile() == null){
+                    profileTracker = object:ProfileTracker(){
+                        override fun onCurrentProfileChanged(oldProfile: Profile?, currentProfile: Profile?) {
+                            Log.d("NOMBRE", currentProfile?.firstName+" "+ currentProfile?.lastName)
+                            profileTracker!!.startTracking()
+                        }
+
+                    }
+                }else{
+                    val profile = Profile.getCurrentProfile()
+                    Log.d("NOMBRE", profile?.firstName)
+                    tvNombre.setText(profile?.firstName+" "+ profile?.lastName)
+                }
+            }
+
+            override fun onCancel() {
+                // App code
+            }
+
+            override fun onError(exception: FacebookException) {
+                // App code
+            }
+        })
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -31,6 +88,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
     }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+        callbackManager!!.onActivityResult(requestCode, resultCode, data)
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
