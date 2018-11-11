@@ -21,12 +21,18 @@ import com.facebook.login.widget.LoginButton
 import android.content.Context.LAYOUT_INFLATER_SERVICE
 import android.view.LayoutInflater
 import com.jpapa.cusmart.R.layout.nav_header_main
+import com.facebook.GraphResponse
+import org.json.JSONObject
+import com.facebook.GraphRequest
+
+
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private var callbackManager:CallbackManager? = null
     private var profileTracker:ProfileTracker? = null
+    private var accessToken: AccessToken? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +49,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
         //MODIFICAR ESTA LINEA, PARA CAMBIARLA AL HEADER DE LA BARRA
-        val vi = inflater.inflate(R.layout.nav_header_main, null) //log.xml is your file.
-        val tvusuario = vi.findViewById(R.id.tvusuario) as TextView //get a reference to the textview on the log.xml file.
-       // val tvNombre = findViewById<TextView>(R.id.tvNombre)
+       // val inflater = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+     //   val vi = inflater.inflate(R.layout.nav_header_main, null) //log.xml is your file.
+     //   val tvusuario = vi.findViewById<TextView>(R.id.tvusuario) //get a reference to the textview on the log.xml file.
+        val tvNombre = findViewById<TextView>(R.id.tvNombre)
+
+        if(AccessToken.getCurrentAccessToken()!= null && Profile.getCurrentProfile() != null){
+            accessToken = AccessToken.getCurrentAccessToken()
+            tvNombre.text = Profile.getCurrentProfile().firstName + " " + Profile.getCurrentProfile().lastName
+
+            cargarFoto()
+        }
 
         // Callback registration
         loginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
@@ -93,6 +107,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         callbackManager!!.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    fun cargarFoto(){
+        val request = GraphRequest.newMeRequest(this.accessToken) { objeto, response ->
+            // Application code
+            Log.d("GRAPH",response.toString())
+        }
+        val parameters = Bundle()
+        parameters.putString("fields", "picture")
+        request.parameters = parameters
+        request.executeAsync()
     }
 
 
