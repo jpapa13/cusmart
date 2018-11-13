@@ -1,8 +1,10 @@
-package com.jpapa.cusmart
+package com.jpapa.cusmart.Activities
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.ArrayAdapter
+import android.widget.ListView
+import com.jpapa.cusmart.R
 import kotlinx.android.synthetic.main.activity_profesor_detail.*
 
 class ProfesorDetailActivity : AppCompatActivity() {
@@ -12,7 +14,9 @@ class ProfesorDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profesor_detail)
 
         val adapter = ArrayAdapter(this,
-                R.layout.listview_item, array)
+                R.layout.listview_profesor, array)
+        val listView: ListView = findViewById(R.id.commentListView)
+        listView.adapter = adapter
         //val listView: ListView = findViewById(R.id.commentListView) directo al componente...
         commentListView.adapter = adapter
     }

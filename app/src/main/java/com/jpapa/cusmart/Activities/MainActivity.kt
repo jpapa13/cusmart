@@ -1,4 +1,4 @@
-package com.jpapa.cusmart
+package com.jpapa.cusmart.Activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.jpapa.cusmart.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
