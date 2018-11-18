@@ -10,7 +10,6 @@ import com.jpapa.cusmart.R
 
 class ProfesorAdapter(private val context: Activity, internal var profesor: List<Profesor>) : ArrayAdapter<Profesor>(context, R.layout.listview_profesor, profesor) {
 
-
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val inflater = context.layoutInflater
         val listViewItem = inflater.inflate(R.layout.listview_profesor, null, true)

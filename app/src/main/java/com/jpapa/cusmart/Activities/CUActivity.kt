@@ -1,17 +1,21 @@
 package com.jpapa.cusmart.Activities
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
+import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.jpapa.cusmart.Adapters.ProfesorAdapter
+import com.jpapa.cusmart.Carrera
 import com.jpapa.cusmart.DB.EndPoints
 import com.jpapa.cusmart.Profesor
 import com.jpapa.cusmart.R
@@ -21,10 +25,11 @@ import org.json.JSONObject
 
 class CUActivity : AppCompatActivity() {
     //var arrayProfesores = arrayOf("MACIAS BRAMBILA HASSEM RUBEN","MEDELLIN SERNA LUIS ANTONIO")
-    //var arrayCarreras = arrayOf("INNI", "INCO", "INBI")
+    var arrayCarrera: Array<String>?= null
+    var arrayCarreras: MutableList<Carrera>? = null
     private var listView: ListView? = null
     private var profesorList: MutableList<Profesor>? = null
-
+    private var carreraList: MutableList<Carrera>? = null
     //var spinner:Spinner? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,19 +38,13 @@ class CUActivity : AppCompatActivity() {
         listView = findViewById(R.id.profesorListView) as ListView
         profesorList = mutableListOf<Profesor>()
 
-        //Adapters
-        //val adapter = ArrayAdapter(this, R.layout.listview_profesor, arrayProfesores)
-        //carrerasSpinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, arrayCarreras)
         loadProfesores()
-        //Profesor selected listener
-        //val listView: ListView = findViewById(R.id.profesorListView) Se pueden trabajar con los componentes directamente c:
-        //profesorListView.adapter = adapter
-        /*profesorListView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, id ->
-            //Toast.makeText(this, "Click on " + position.toString(), Toast.LENGTH_SHORT).show()
+        loadCarreras()
+        profesorListView.onItemClickListener = AdapterView.OnItemClickListener { _, _, _, _ ->
             val intent = Intent(this, ProfesorDetailActivity::class.java)
             startActivity(intent)
         }
-*/
+
         //Carrera selected listener for spinner
         carrerasSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -60,8 +59,9 @@ class CUActivity : AppCompatActivity() {
     }
 
     private fun loadProfesores() {
+        val urls = EndPoints.URL_ROOT_LOCAL+EndPoints.URL_GET_PROFESORES
         val stringRequest = StringRequest(Request.Method.GET,
-                EndPoints.URL_GET_PROFESORES,
+                urls,
                 Response.Listener<String> { s ->
                     try {
                         val obj = JSONObject(s)
@@ -77,9 +77,10 @@ class CUActivity : AppCompatActivity() {
                                         objectProfesor.getString("nombre")
                                 )
                                 profesorList!!.add(profesor)
-                                val adapter = ProfesorAdapter(this@CUActivity, profesorList!!)
-                                listView!!.adapter = adapter
                             }
+                            val adapter = ProfesorAdapter(this@CUActivity, profesorList!!)
+                            listView!!.adapter = adapter
+
                         } else {
                             Toast.makeText(getApplicationContext(), obj.getString("message"), LENGTH_LONG).show()
                         }
@@ -87,6 +88,50 @@ class CUActivity : AppCompatActivity() {
                         e.printStackTrace()
                     }
                 }, Response.ErrorListener { volleyError -> Toast.makeText(applicationContext, volleyError.message, LENGTH_LONG).show() })
+
+        val requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add<String>(stringRequest)
+    }
+
+
+
+    private fun loadCarreras() {
+        val urls = EndPoints.URL_ROOT_LOCAL+EndPoints.URL_GET_CARRERAS
+        val stringRequest = object : StringRequest(
+                Request.Method.POST,
+                urls,
+                Response.Listener<String> { s ->
+                    try {
+                        val obj = JSONObject(s)
+                        Log.d("s", s)
+                        Log.d("obj", obj.toString())
+                        if (!obj.getBoolean("error")) {
+                            val array = obj.getJSONArray("carreras")
+                            val list = ArrayList<String>()
+                            for (i in 0..array.length() - 1) {
+                                val objectCarrera = array.getJSONObject(i)
+                                val carrera = Carrera(
+                                        objectCarrera.getString("nombre")
+                                )
+                                list.add(carrera.nombre)
+                            }
+                            carrerasSpinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
+                        } else {
+                            Toast.makeText(getApplicationContext(), obj.getString("message"), LENGTH_LONG).show()
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                },
+                Response.ErrorListener { volleyError -> Toast.makeText(applicationContext, volleyError.message, Toast.LENGTH_LONG).show() })
+        {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params.put("siglas", "CUCM")
+                return params
+            }
+        }
 
         val requestQueue = Volley.newRequestQueue(this)
         requestQueue.add<String>(stringRequest)
