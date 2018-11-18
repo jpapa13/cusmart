@@ -30,18 +30,22 @@ class CUActivity : AppCompatActivity() {
     private var listView: ListView? = null
     private var profesorList: MutableList<Profesor>? = null
     private var carreraList: MutableList<Carrera>? = null
+    private var cu: String? = null
     //var spinner:Spinner? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cu)
 
+        cu = intent.getStringExtra("cu")
         listView = findViewById(R.id.profesorListView) as ListView
         profesorList = mutableListOf<Profesor>()
 
+
         loadProfesores()
         loadCarreras()
-        profesorListView.onItemClickListener = AdapterView.OnItemClickListener { _, _, _, _ ->
+        profesorListView.onItemClickListener = AdapterView.OnItemClickListener { p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long ->
             val intent = Intent(this, ProfesorDetailActivity::class.java)
+            intent.putExtra("profesor", profesorList!![p2].nombre)
             startActivity(intent)
         }
 
@@ -52,9 +56,8 @@ class CUActivity : AppCompatActivity() {
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                //Toast.makeText(this@CUActivity, profesorList!![p2], LENGTH_LONG).show()
+                Toast.makeText(this@CUActivity, profesorList!![p2].nombre, LENGTH_LONG).show()
             }
-
         }
     }
 
@@ -128,7 +131,7 @@ class CUActivity : AppCompatActivity() {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-                params.put("siglas", "CUCM")//TODO("GET CU from previus activity")
+                params.put("siglas", cu!!)//TODO("GET CU from previus activity")
                 return params
             }
         }

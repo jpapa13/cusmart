@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toast
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
@@ -23,10 +24,14 @@ class ProfesorDetailActivity : AppCompatActivity() {
     var array = arrayOf("No manches, es bien barco! -El Bryan","cmamut :v -Un alumno reprobado")
     private var listView: ListView? = null
     private var comentarioList: MutableList<Comentario>? = null
+    private var profesor: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profesor_detail)
-
+        val textView: TextView = findViewById(R.id.prof_dataTextView)
+        profesor = intent.getStringExtra("profesor")
+        textView.text = profesor
         listView = findViewById(R.id.commentListView) as ListView
         comentarioList = mutableListOf<Comentario>()
 
@@ -83,7 +88,7 @@ class ProfesorDetailActivity : AppCompatActivity() {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-                params.put("nombre", "JUAN PABLO MEDINA QUIRARTE") //TODO("Get the profesor from previus activity")
+                params.put("nombre", profesor!!) //TODO("Get the profesor from previus activity")
                 return params
             }
         }

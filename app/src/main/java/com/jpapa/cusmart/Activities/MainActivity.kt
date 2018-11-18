@@ -62,6 +62,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
             R.id.nav_cucei -> {
                 val intent = Intent(this, CUActivity::class.java)
+                intent.putExtra("cu", "CUCEI")
                 startActivity(intent)
             }
             R.id.nav_gallery -> {
