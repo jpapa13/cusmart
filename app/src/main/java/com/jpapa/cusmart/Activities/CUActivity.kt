@@ -128,7 +128,7 @@ class CUActivity : AppCompatActivity() {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-                params.put("siglas", "CUCM")
+                params.put("siglas", "CUCM")//TODO("GET CU from previus activity")
                 return params
             }
         }

@@ -5,10 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import com.jpapa.cusmart.Comment
+import com.jpapa.cusmart.Comentario
 import com.jpapa.cusmart.R
 
-class CommentAdapter(private val context: Activity, internal var comment: List<Comment>) : ArrayAdapter<Comment>(context, R.layout.listview_comment, comment) {
+class ComentarioAdapter(private val context: Activity, internal var comentario: List<Comentario>) : ArrayAdapter<Comentario>(context, R.layout.listview_comment, comentario) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val inflater = context.layoutInflater
@@ -18,7 +18,7 @@ class CommentAdapter(private val context: Activity, internal var comment: List<C
         val textViewAutor = listViewItem.findViewById(R.id.textViewAutor) as TextView
         val textViewDate = listViewItem.findViewById(R.id.textViewDate) as TextView
 
-        val comment = comment[position]
+        val comment = comentario[position]
         textViewText.text = comment.texto
         textViewAutor.text = comment.autor
         textViewDate.text = comment.fecha.toString()

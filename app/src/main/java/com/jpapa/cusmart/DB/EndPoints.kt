@@ -6,4 +6,5 @@ object EndPoints {
     val URL_ADD_PROFESOR = "addprofesor"
     val URL_GET_PROFESORES = "getprofesores"
     val URL_GET_CARRERAS = "getcarreras"
+    val URL_GET_COMENTARIOS = "getcomentarios"
 }
