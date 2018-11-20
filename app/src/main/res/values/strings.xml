@@ -7,10 +7,56 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="intro">CUSMART es una página que te ayuda a buscar a tus profesores de una manera sencilla, amigable, rápida y con toda la información al alcance de tu mano</string>
+
     <string name="qci_info">UNIVERSIDAD DE GUADALAJARA
-CENTRO UNIVERSITARIO DE CIENCIAS EXACTAS E INGENIERÍAS
-Blvd. Marcelino García Barragán #1421, esq Calzada Olímpica, C.P. 44430, Guadalajara, Jalisco, México.
-Teléfono: +52 (33) 1378 5900.</string>
+        CENTRO UNIVERSITARIO DE CIENCIAS EXACTAS E INGENIERÍAS
+        Blvd. Marcelino García Barragán #1421, esq Calzada Olímpica, C.P. 44430, Guadalajara, Jalisco, México.
+        Teléfono: +52 (33) 1378 5900.
+    </string>
+
+    <string name="cuaad_info">CENTRO UNIVERSITARIO DE ARTE, ARQUITECTURA y DISEÑO \n
+        Sede Huentitán
+        Calzada Independencia Norte No. 5075, Huentitán El Bajo S.H. C.P. 44250 Tel. 1202-3000  \n \n
+
+        Sede Artes Plásticas
+        Ex Claustro de Santa María de Gracia extensión Belén 120,  Centro Histórico de Guadalajara, Jalisco, México.
+        Tels. 1203-5442, 1203-5443 \n \n
+
+        Sede Música
+        Ex Claustro de San Agustín, extensión Morelos No. 191, Centro Histórico, Guadalajara, Jalisco, México.
+        Tels. 1203-5436, 1203-5437, 1203-5439</string>
+
+    <string name="cucs_info">
+        CENTRO UNIVERSITARIO DE CIENCIAS DE LA SALUD
+        Sierra Mojada 950, Col. Independencia, C.P. 44340, Guadalajara, Jalisco, México
+        Teléfono: +52 (33) 1058 5200
+    </string>
+
+    <string name="cucea_info">
+        CENTRO UNIVERSITARIO DE CIENCIAS ECONÓMICO ADMINISTRATIVAS
+        Periférico Norte N° 799, Núcleo Universitario Los Belenes, C.P. 45100, Zapopan, Jalisco, México.
+        Teléfono: +52 (33) 3770 3300
+    </string>
+
+    <string name="cucsh_info">
+        CENTRO UNIVERSITARIO DE CIENCIAS SOCIALES Y HUMANIDADES
+        Guanajuato #1045, Col. Alcalde Barranquitas, C.P. 44260.
+        Guadalajara, Jalisco, México. © 2011, derechos reservados.
+        Teléfono: +52 (33) 38193300.
+    </string>
+
+    <string name="cucba_info">
+        CENTRO UNIVERSITARIO DE CIENCIAS BIOLOGICAS Y AGROPECUARIAS
+        Camino Ramón Padilla Sánchez No. 2100 Nextipac, Zapopan, Jalisco
+        Teléfono: +52 (33)3777 1150
+    </string>
+
+    <string name="cut_info">
+        CENTRO UNIVERSITARIO DE TONALÁ
+        Campus CUTonalá Av. Nuevo Periférico No. 555 Ejido San José Tatepozco, C.P. 45425, Tonalá Jalisco, México
+        Teléfono: +52 (33) 20 00 23 00 Ext. 64007 y 64044
+    </string>
+
     <string name="hassem_detail">MACIAS BRAMBILA HASSEM RUBEN
 DEPARTAMENTO CIENCIAS COMPUTACIONALES
         código: 2949676

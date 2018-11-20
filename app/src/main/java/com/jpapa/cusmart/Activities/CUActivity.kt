@@ -1,13 +1,11 @@
 package com.jpapa.cusmart.Activities
 import android.content.Intent
+import android.media.Image
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.Toast
+import android.widget.*
 import android.widget.Toast.LENGTH_LONG
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
@@ -19,6 +17,7 @@ import com.jpapa.cusmart.Carrera
 import com.jpapa.cusmart.DB.EndPoints
 import com.jpapa.cusmart.Profesor
 import com.jpapa.cusmart.R
+import com.jpapa.cusmart.R.string.*
 import kotlinx.android.synthetic.main.activity_cu.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -27,22 +26,86 @@ class CUActivity : AppCompatActivity() {
     //var arrayProfesores = arrayOf("MACIAS BRAMBILA HASSEM RUBEN","MEDELLIN SERNA LUIS ANTONIO")
     var arrayCarrera: Array<String>?= null
     var arrayCarreras: MutableList<Carrera>? = null
+   // var imglogo:ImageView? = null
+  //  var tvdescripcion:TextView? = null
+
     private var listView: ListView? = null
     private var profesorList: MutableList<Profesor>? = null
     private var carreraList: MutableList<Carrera>? = null
     private var cu: String? = null
+   // private var cutext: String? = null
+   // private var cuimg: Int? = null
     //var spinner:Spinner? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cu)
 
+
         cu = intent.getStringExtra("cu")
-        listView = findViewById(R.id.profesorListView) as ListView
+
+        /*
+        cutext = intent.getStringExtra("cu2")
+        cuimg= intent.getIntExtra("img",0)
+
+        imglogo = findViewById(R.id.logo)
+        imglogo?.setImageResource(cuimg!!)
+        tvdescripcion = findViewById(R.id.texto)
+        tvdescripcion?.setText(cutext)
+        */
+
+       when(cu){
+           "CUCEI"->{
+               val img = findViewById<ImageView>(R.id.image)
+               img.setImageResource(R.drawable.ic_cucei)
+               val text = findViewById<TextView>(R.id.texto)
+               text.setText(qci_info)
+           }
+           "CUCEA"->{
+               val img = findViewById<ImageView>(R.id.image)
+               img.setImageResource(R.drawable.ic_cucea)
+               val text = findViewById<TextView>(R.id.texto)
+               text.setText(cucea_info)
+           }
+           "CUAAD"->{
+               val img = findViewById<ImageView>(R.id.image)
+               img.setImageResource(R.drawable.ic_cuaad)
+               val text = findViewById<TextView>(R.id.texto)
+               text.setText(cuaad_info)
+           }
+           "CUCSH"->{
+               val img = findViewById<ImageView>(R.id.image)
+               img.setImageResource(R.drawable.ic_cucsh)
+               val text = findViewById<TextView>(R.id.texto)
+               text.setText(cucsh_info)
+           }
+           "CUCBA"->{
+               val img = findViewById<ImageView>(R.id.image)
+               img.setImageResource(R.drawable.ic_cucba)
+               val text = findViewById<TextView>(R.id.texto)
+               text.setText(cucba_info)
+           }
+           "CUCS"->{
+               val img = findViewById<ImageView>(R.id.image)
+               img.setImageResource(R.drawable.ic_cucs)
+               val text = findViewById<TextView>(R.id.texto)
+               text.setText(cucs_info)
+           }
+           "CUT"->{
+               val img = findViewById<ImageView>(R.id.image)
+               img.setImageResource(R.drawable.ic_cut)
+               val text = findViewById<TextView>(R.id.texto)
+               text.setText(cut_info)
+           }
+       }
+
+        listView = findViewById<ListView>(R.id.profesorListView)
         profesorList = mutableListOf<Profesor>()
 
 
         loadProfesores()
         loadCarreras()
+
         profesorListView.onItemClickListener = AdapterView.OnItemClickListener { p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long ->
             val intent = Intent(this, ProfesorDetailActivity::class.java)
             intent.putExtra("profesor", profesorList!![p2].nombre)
@@ -60,6 +123,8 @@ class CUActivity : AppCompatActivity() {
             }
         }
     }
+
+
 
     private fun loadProfesores() {
         val urls = EndPoints.URL_ROOT_LOCAL+EndPoints.URL_GET_PROFESORES

@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Inicia sesión con Facebook", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "Inicia sesión con Facebook", Snackbar.LENGTH_SHORT)
                     .setAction("Action", null).show()
         }
 
@@ -63,16 +63,43 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_cucei -> {
                 val intent = Intent(this, CUActivity::class.java)
                 intent.putExtra("cu", "CUCEI")
+               // intent.putExtra("cu2", "@string/qci_info")
                 startActivity(intent)
             }
             R.id.nav_gallery -> {
 
             }
             R.id.nav_cucea -> {
-
+                val intent = Intent(this, CUActivity::class.java)
+                intent.putExtra("cu", "CUCEA")
+               // intent.putExtra("cu2", "cucea_info")
+               // intent.putExtra("img",R.drawable.ic_cucea)
+                startActivity(intent)
             }
             R.id.nav_cuaad -> {
-
+                val intent = Intent(this, CUActivity::class.java)
+                intent.putExtra("cu", "CUAAD")
+                startActivity(intent)
+            }
+            R.id.nav_cucsh -> {
+                val intent = Intent(this, CUActivity::class.java)
+                intent.putExtra("cu", "CUCSH")
+                startActivity(intent)
+            }
+            R.id.nav_cucba -> {
+                val intent = Intent(this, CUActivity::class.java)
+                intent.putExtra("cu", "CUCBA")
+                startActivity(intent)
+            }
+            R.id.nav_cucs -> {
+                val intent = Intent(this, CUActivity::class.java)
+                intent.putExtra("cu", "CUCS")
+                startActivity(intent)
+            }
+            R.id.nav_cut -> {
+                val intent = Intent(this, CUActivity::class.java)
+                intent.putExtra("cu", "CUT")
+                startActivity(intent)
             }
             R.id.nav_share -> {
 
