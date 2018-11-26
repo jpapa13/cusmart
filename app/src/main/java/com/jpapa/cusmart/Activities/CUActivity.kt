@@ -1,6 +1,5 @@
 package com.jpapa.cusmart.Activities
 import android.content.Intent
-import android.media.Image
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -15,6 +14,7 @@ import com.android.volley.toolbox.Volley
 import com.jpapa.cusmart.Adapters.ProfesorAdapter
 import com.jpapa.cusmart.Carrera
 import com.jpapa.cusmart.DB.EndPoints
+import com.jpapa.cusmart.Materia
 import com.jpapa.cusmart.Profesor
 import com.jpapa.cusmart.R
 import com.jpapa.cusmart.R.string.*
@@ -31,7 +31,9 @@ class CUActivity : AppCompatActivity() {
 
     private var listView: ListView? = null
     private var profesorList: MutableList<Profesor>? = null
-    private var carreraList: MutableList<Carrera>? = null
+    private val carreraList = ArrayList<String>()
+    private val materiaList = ArrayList<String>()
+    private val claveMateriaList = ArrayList<String>()
     private var cu: String? = null
    // private var cutext: String? = null
    // private var cuimg: Int? = null
@@ -40,7 +42,6 @@ class CUActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cu)
-
 
         cu = intent.getStringExtra("cu")
 
@@ -103,7 +104,6 @@ class CUActivity : AppCompatActivity() {
         profesorList = mutableListOf<Profesor>()
 
 
-        loadProfesores()
         loadCarreras()
 
         profesorListView.onItemClickListener = AdapterView.OnItemClickListener { p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long ->
@@ -116,14 +116,27 @@ class CUActivity : AppCompatActivity() {
         carrerasSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                carrerasSpinner.setSelection(0)
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 Toast.makeText(this@CUActivity, profesorList!![p2].nombre, LENGTH_LONG).show()
+                loadMaterias(carreraList!![p2])
+            }
+        }
+        //Carrera selected listener for spinner
+        materiaSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                //carrerasSpinner.setSelection(0)
+            }
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                Toast.makeText(this@CUActivity, carreraList!![p2], LENGTH_LONG).show()
+                //loadMaterias(profesorList!![p2].nombre)
             }
         }
     }
-
 
 
     private fun loadProfesores() {
@@ -175,15 +188,14 @@ class CUActivity : AppCompatActivity() {
                         Log.d("obj", obj.toString())
                         if (!obj.getBoolean("error")) {
                             val array = obj.getJSONArray("carreras")
-                            val list = ArrayList<String>()
                             for (i in 0..array.length() - 1) {
                                 val objectCarrera = array.getJSONObject(i)
                                 val carrera = Carrera(
                                         objectCarrera.getString("nombre")
                                 )
-                                list.add(carrera.nombre)
+                                carreraList.add(carrera.nombre)
                             }
-                            carrerasSpinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list)
+                            carrerasSpinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, carreraList)
                         } else {
                             Toast.makeText(getApplicationContext(), obj.getString("message"), LENGTH_LONG).show()
                         }
@@ -197,6 +209,49 @@ class CUActivity : AppCompatActivity() {
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
                 params.put("siglas", cu!!)//TODO("GET CU from previus activity")
+                return params
+            }
+        }
+
+        val requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add<String>(stringRequest)
+    }
+
+    private fun loadMaterias(carrera:String) {
+        val urls = EndPoints.URL_ROOT_LOCAL+EndPoints.URL_GET_MATERIAS
+        val stringRequest = object : StringRequest(
+                Request.Method.POST,
+                urls,
+                Response.Listener<String> { s ->
+                    try {
+                        val obj = JSONObject(s)
+                        Log.d("s", s)
+                        Log.d("obj", obj.toString())
+                        if (!obj.getBoolean("error")) {
+                            val array = obj.getJSONArray("materias")
+                            for (i in 0..array.length() - 1) {
+                                val objectCarrera = array.getJSONObject(i)
+                                val materia = Materia(
+                                        objectCarrera.getString("clave"),
+                                        objectCarrera.getString("nombre")
+                                )
+                                materiaList.add(materia.nombre)
+                                claveMateriaList.add(materia.clave)
+                            }
+                            materiaSpinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, materiaList)
+                        } else {
+                            Toast.makeText(getApplicationContext(), obj.getString("message"), LENGTH_LONG).show()
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                },
+                Response.ErrorListener { volleyError -> Toast.makeText(applicationContext, volleyError.message, Toast.LENGTH_LONG).show() })
+        {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params.put("clave", carrera!!)
                 return params
             }
         }
