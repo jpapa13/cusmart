@@ -120,7 +120,7 @@ class CUActivity : AppCompatActivity() {
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                Toast.makeText(this@CUActivity, profesorList!![p2].nombre, LENGTH_LONG).show()
+                Toast.makeText(this@CUActivity, carreraList!![p2], LENGTH_LONG).show()
                 loadMaterias(carreraList!![p2])
             }
         }
@@ -132,13 +132,13 @@ class CUActivity : AppCompatActivity() {
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                Toast.makeText(this@CUActivity, carreraList!![p2], LENGTH_LONG).show()
-                //loadMaterias(profesorList!![p2].nombre)
+                Toast.makeText(this@CUActivity, materiaList!![p2], LENGTH_LONG).show()
+                loadProfesores(claveMateriaList[p2])
             }
         }
     }
 
-
+/*
     private fun loadProfesores() {
         val urls = EndPoints.URL_ROOT_LOCAL+EndPoints.URL_GET_PROFESORES
         val stringRequest = StringRequest(Request.Method.GET,
@@ -172,7 +172,7 @@ class CUActivity : AppCompatActivity() {
 
         val requestQueue = Volley.newRequestQueue(this)
         requestQueue.add<String>(stringRequest)
-    }
+    }*/
 
 
 
@@ -252,6 +252,50 @@ class CUActivity : AppCompatActivity() {
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
                 params.put("clave", carrera!!)
+                return params
+            }
+        }
+
+        val requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add<String>(stringRequest)
+    }
+
+
+    private fun loadProfesores(materia:String) {
+        val urls = EndPoints.URL_ROOT_LOCAL+EndPoints.URL_GET_PROFESORES
+        val stringRequest = object : StringRequest(Request.Method.POST,
+                urls,
+                Response.Listener<String> { s ->
+                    try {
+                        val obj = JSONObject(s)
+                        Log.d("s", s)
+                        Log.d("obj", obj.toString())
+                        if (!obj.getBoolean("error")) {
+                            val array = obj.getJSONArray("profesores")
+
+                            for (i in 0..array.length() - 1) {
+                                val objectProfesor = array.getJSONObject(i)
+                                val profesor = Profesor(
+                                        objectProfesor.getString("id"),
+                                        objectProfesor.getString("nombre")
+                                )
+                                profesorList!!.add(profesor)
+                            }
+                            val adapter = ProfesorAdapter(this@CUActivity, profesorList!!)
+                            listView!!.adapter = adapter
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), obj.getString("message"), LENGTH_LONG).show()
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                }, Response.ErrorListener { volleyError -> Toast.makeText(applicationContext, volleyError.message, LENGTH_LONG).show() })
+        {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params.put("clave", materia!!)
                 return params
             }
         }
