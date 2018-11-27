@@ -25,12 +25,14 @@ class ProfesorDetailActivity : AppCompatActivity() {
     private var listView: ListView? = null
     private var comentarioList: MutableList<Comentario>? = null
     private var profesor: String? = null
+    private var codigo: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profesor_detail)
         val textView: TextView = findViewById(R.id.prof_dataTextView)
         profesor = intent.getStringExtra("profesor")
+        codigo = intent.getStringExtra("codigo")
         textView.text = profesor
         listView = findViewById(R.id.commentListView) as ListView
         comentarioList = mutableListOf<Comentario>()
@@ -51,7 +53,7 @@ class ProfesorDetailActivity : AppCompatActivity() {
         //val listView: ListView = findViewById(R.id.commentListView) directo al componente...
     }
     private fun loadComentarios() {
-        val urls = EndPoints.URL_ROOT_LOCAL+ EndPoints.URL_GET_COMENTARIOS
+        val urls = EndPoints.URL_ROOT_WEB+ EndPoints.URL_GET_COMENTARIOS
         val stringRequest = object : StringRequest(
                 Request.Method.POST,
                 urls,
@@ -88,7 +90,7 @@ class ProfesorDetailActivity : AppCompatActivity() {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-                params.put("nombre", profesor!!) //TODO("Get the profesor from previus activity")
+                params.put("id", codigo!!) //TODO("Get the profesor from previus activity")
                 return params
             }
         }

@@ -109,6 +109,7 @@ class CUActivity : AppCompatActivity() {
         profesorListView.onItemClickListener = AdapterView.OnItemClickListener { p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long ->
             val intent = Intent(this, ProfesorDetailActivity::class.java)
             intent.putExtra("profesor", profesorList!![p2].nombre)
+            intent.putExtra("profesor", profesorList!![p2].codigo)
             startActivity(intent)
         }
 
