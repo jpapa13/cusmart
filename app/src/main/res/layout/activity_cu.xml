@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.CUActivity">
-
+    tools:context=".Activities.CUActivity"
+    tools:layout_editor_absoluteY="81dp">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -47,27 +47,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materiaSpinner" />
 
-    <ListView
-        android:id="@+id/profesorListView"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_margin="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+    <ScrollView
+        android:id="@+id/scrollView6"
+        android:layout_width="397dp"
+        android:layout_height="448dp"
+        android:layout_marginTop="4dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        tools:layout_editor_absoluteX="0dp"
+        tools:ignore="MissingConstraints">
+
+        <ListView
+            android:id="@+id/profesorListView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_margin="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchView" />
+    </ScrollView>
+
 
     <Spinner
         android:id="@+id/carrerasSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/materiaSpinner"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <Spinner
@@ -76,8 +86,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
+        app:layout_constraintTop_toBottomOf="@+id/carrerasSpinner" />
 </android.support.constraint.ConstraintLayout>

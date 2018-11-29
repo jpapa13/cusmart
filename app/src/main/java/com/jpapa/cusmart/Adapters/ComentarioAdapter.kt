@@ -21,7 +21,6 @@ class ComentarioAdapter(private val context: Activity, internal var comentario: 
         val comment = comentario[position]
         textViewText.text = comment.texto
         textViewAutor.text = comment.autor
-        textViewDate.text = comment.fecha.toString()
 
         return listViewItem
     }

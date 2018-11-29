@@ -33,6 +33,8 @@ class ProfesorDetailActivity : AppCompatActivity() {
         val textView: TextView = findViewById(R.id.prof_dataTextView)
         profesor = intent.getStringExtra("profesor")
         codigo = intent.getStringExtra("codigo")
+
+
         textView.text = profesor
         listView = findViewById(R.id.commentListView) as ListView
         comentarioList = mutableListOf<Comentario>()
@@ -44,7 +46,6 @@ class ProfesorDetailActivity : AppCompatActivity() {
         val date = Date(2012,12,12)
         val comment = Comentario(
                 "No manches, es bien barco!",
-                date,
                 "autor"
         )
         comentarioList!!.add(comment)
@@ -66,13 +67,9 @@ class ProfesorDetailActivity : AppCompatActivity() {
                             val array = obj.getJSONArray("comentario")
                             for (i in 0..array.length() - 1) {
                                 val objectComentario = array.getJSONObject(i)
-
-                                val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
-                                val date = simpleDateFormat.parse(objectComentario.getString("fecha"))
                                 val comentario = Comentario(
                                         objectComentario.getString("texto"),
-                                        date,
-                                        objectComentario.getString("autor")
+                                        "yo"
                                 )
                                 comentarioList!!.add(comentario)
                             }
