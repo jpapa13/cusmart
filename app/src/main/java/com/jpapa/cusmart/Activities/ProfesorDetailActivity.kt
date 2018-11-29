@@ -17,7 +17,6 @@ import com.jpapa.cusmart.DB.EndPoints
 import com.jpapa.cusmart.R
 import org.json.JSONException
 import org.json.JSONObject
-import java.text.SimpleDateFormat
 import java.util.*
 
 class ProfesorDetailActivity : AppCompatActivity() {
@@ -54,7 +53,7 @@ class ProfesorDetailActivity : AppCompatActivity() {
         //val listView: ListView = findViewById(R.id.commentListView) directo al componente...
     }
     private fun loadComentarios() {
-        val urls = EndPoints.URL_ROOT_WEB+ EndPoints.URL_GET_COMENTARIOS
+        val urls = EndPoints.URL_ROOT_LOCAL+ EndPoints.URL_GET_COMENTARIOS
         val stringRequest = object : StringRequest(
                 Request.Method.POST,
                 urls,

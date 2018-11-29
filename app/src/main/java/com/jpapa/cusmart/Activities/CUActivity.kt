@@ -134,6 +134,7 @@ class CUActivity : AppCompatActivity() {
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 Toast.makeText(this@CUActivity, materiaList!![p2], LENGTH_LONG).show()
+                profesorListView.adapter = null
                 loadProfesores(claveMateriaList[p2])
             }
         }
