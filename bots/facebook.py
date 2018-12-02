@@ -2,7 +2,7 @@ from facepy import GraphAPI
 import pymysql.cursors
 
 #Token de usuario de un admin de grupo, e ID de facebook del grupo
-oauth_access_token = 'EAALRKKKlKzQBAHjGtWSDzLdTKWyVP19XOZCtieOkViABZAjiZBWvLxkXgZAkza2obZCzZCHkPsN4fFiyKVWIARZAMEAVyxuiuMvZB6uwuwf5PSXWMZCnKjdxMCBCEhlLijPwYRmOnLugTuMy1B1UzHG7Hw0Tq0XMeLZCR9lPyvq9Dh3WjZAWz1dzGcvo4eqVPGtKs39Kmt5vNLGPyRA1Tce8kppvHCpcwGo1eEZD'
+oauth_access_token = ''
 id_grupo = '2109671732696327'
 
 #2109671732696327/feed
