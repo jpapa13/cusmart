@@ -48,6 +48,9 @@ with con.cursor() as cursor:
 			clave = 8 * i + 1
 			materia = 8 * i + 2
 
+			if profe == '':
+				break
+
 			try: 	
 				cursor.execute("INSERT INTO materia (clave, nombre) VALUES (%s, %s)", (datos[clave].text, datos[materia].text))
 			except Exception as e:
